@@ -1,18 +1,32 @@
+// ==================================================
+//  ____         _                ____                      
+// | __ )  _ __ (_)  __ _  _ __  / ___|  _   _  _ __    ___ 
+// |  _ \ | '__|| | / _` || '_ \ \___ \ | | | || '_ \  / _ \
+// | |_) || |   | || (_| || | | | ___) || |_| || | | ||  __/
+// |____/ |_|   |_| \__,_||_| |_||____/  \__,_||_| |_| \___|
+//                                                          
+// ==================================================
+// Programed By: BrianSune
+// Contact: briansune@gmail.com
+// ==================================================
+
+`timescale 1ns / 1ps
+
 module image_gain_wb#(
 	parameter red_gain = 10,
 	parameter green_gain = 7,
 	parameter blue_gain = 9
 )(
 	input wire			clock,
-    input wire			input_vsync,
     input wire			input_hsync,
+    input wire			input_vsync,
     input wire			input_den,
     input wire			input_line_start,
     input wire	[29:0]	input_data_even,
     input wire	[29:0]	input_data_odd,
 	
-    output reg			output_vsync,
     output reg			output_hsync,
+    output reg			output_vsync,
     output reg			output_den,
     output reg			output_line_start,
     output reg	[23:0]	output_data_even,

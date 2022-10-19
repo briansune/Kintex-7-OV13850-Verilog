@@ -1,3 +1,17 @@
+// ==================================================
+//  ____         _                ____                      
+// | __ )  _ __ (_)  __ _  _ __  / ___|  _   _  _ __    ___ 
+// |  _ \ | '__|| | / _` || '_ \ \___ \ | | | || '_ \  / _ \
+// | |_) || |   | || (_| || | | | ___) || |_| || | | ||  __/
+// |____/ |_|   |_| \__,_||_| |_||____/  \__,_||_| |_| \___|
+//                                                          
+// ==================================================
+// Programed By: BrianSune
+// Contact: briansune@gmail.com
+// ==================================================
+
+`timescale 1ns / 1ps
+
 module video_fb_output#(
 	//total visible and blanking pixels per line
 	parameter video_hlength = 2200,
@@ -12,7 +26,8 @@ module video_fb_output#(
 	parameter video_vsync_pol = 1'b1,
 	parameter video_vsync_len = 5, //vertical sync length in lines
 	parameter video_vbp_len = 4, //vertical back porch length (excluding sync)
-	parameter video_v_visible = 1080 //number of visible lines per frame
+	parameter video_v_visible = 1080, //number of visible lines per frame
+	parameter rst_act_low = 1'b0
 )(
 	input wire			pixel_clock,
 	//active high async reset
@@ -51,7 +66,7 @@ module video_fb_output#(
 		.video_v_visible	(video_v_visible)
 	)tmg_gen(
 		.pixel_clock		(pixel_clock),
-		.reset				(reset),
+		.reset				(rst_act_low ^ reset),
 		.ext_sync			(1'b0),
 		.timing_h_pos		(timing_h_pos),
 		.timing_v_pos		(timing_v_pos),
