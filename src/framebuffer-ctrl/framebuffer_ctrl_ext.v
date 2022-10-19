@@ -1,4 +1,4 @@
-module framebuffer_ctrl_ext(
+module framebuffer_ctrl_ext#(
 	parameter [7:0] burst_len = 16,
 	parameter input_width = 3840, //Pixel size of input video
 	parameter input_height = 2160,
@@ -24,106 +24,108 @@ module framebuffer_ctrl_ext(
     output reg	[23:0]	output_data,
 	
 	//AXI4 master general
-	// (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 axi_clock CLK" *)
-	// (* X_INTERFACE_PARAMETER = "ASSOCIATED_BUSIF maxi_fb, ASSOCIATED_RESET axi_resetn, FREQ_HZ 100000000" *)
+	(* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 axi_clock CLK" *)
+	(* X_INTERFACE_PARAMETER = "ASSOCIATED_BUSIF maxi_fb, ASSOCIATED_RESET axi_resetn, FREQ_HZ 200000000" *)
     input wire					axi_clock,
-	// (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 axi_resetn RST" *)
-	// (* X_INTERFACE_PARAMETER = "POLARITY ACTIVE_LOW" *)
+	(* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 axi_resetn RST" *)
+	(* X_INTERFACE_PARAMETER = "POLARITY ACTIVE_LOW" *)
     input wire					axi_resetn,
 	
 	// =====================================================================
     //AXI4 write address
 	// =====================================================================
-    // (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb AWID" *)
+    (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb AWID" *)
+	(* X_INTERFACE_PARAMETER = "CLK_DOMAIN axi_clock,FREQ_HZ 200000000,ID_WIDTH 1,NUM_WRITE_OUTSTANDING 8,NUM_READ_OUTSTANDING 8,SUPPORTS_NARROW_BURST 0" *)
 	output wire		[0 : 0]		axi_awid,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb AWADDR" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb AWADDR" *)
     output wire		[28 : 0]	axi_awaddr,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb AWLEN" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb AWLEN" *)
     output wire		[7 : 0]		axi_awlen,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb AWSIZE" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb AWSIZE" *)
     output wire		[2 : 0]		axi_awsize,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb AWBURST" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb AWBURST" *)
     output wire		[1 : 0]		axi_awburst,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb AWLOCK" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb AWLOCK" *)
     output wire		[0 : 0]		axi_awlock,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb AWCACHE" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb AWCACHE" *)
     output wire		[3 : 0]		axi_awcache,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb AWPROT" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb AWPROT" *)
     output wire		[2 : 0]		axi_awprot,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb AWQOS" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb AWQOS" *)
     output wire		[3 : 0]		axi_awqos,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb AWVALID" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb AWVALID" *)
     output wire					axi_awvalid,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb AWREADY" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb AWREADY" *)
     input wire					axi_awready,
 	// =====================================================================
     //AXI4 write datapath
 	// =====================================================================
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb WDATA" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb WDATA" *)
     output wire		[255 : 0]	axi_wdata,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb WSTRB" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb WSTRB" *)
     output wire		[31 : 0]	axi_wstrb,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb WLAST" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb WLAST" *)
     output wire					axi_wlast,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb WVALID" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb WVALID" *)
     output wire					axi_wvalid,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb WREADY" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb WREADY" *)
     input wire					axi_wready,
 	// =====================================================================
     //AXI4 write response
 	// =====================================================================
-    // (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb BID" *)
+    (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb BID" *)
 	input wire		[0 : 0]		axi_bid,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb BRESP" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb BRESP" *)
     input wire		[1 : 0]		axi_bresp,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb BVALID" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb BVALID" *)
     input wire					axi_bvalid,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb BREADY" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb BREADY" *)
     output wire					axi_bready,
 	
 	// =====================================================================
     //AXI4 read address
 	// =====================================================================
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb ARID" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb ARID" *)
     output wire		[0 : 0]		axi_arid,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb ARADDR" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb ARADDR" *)
     output wire		[28 : 0]	axi_araddr,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb ARLEN" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb ARLEN" *)
     output wire		[7 : 0]		axi_arlen,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb ARSIZE" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb ARSIZE" *)
     output wire		[2 : 0]		axi_arsize,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb ARBURST" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb ARBURST" *)
     output wire		[1 : 0]		axi_arburst,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb ARLOCK" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb ARLOCK" *)
     output wire		[0 : 0]		axi_arlock,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb ARCACHE" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb ARCACHE" *)
     output wire		[3 : 0]		axi_arcache,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb ARPROT" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb ARPROT" *)
     output wire		[2 : 0]		axi_arprot,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb ARQOS" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb ARQOS" *)
     output wire		[3 : 0]		axi_arqos,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb ARVALID" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb ARVALID" *)
     output wire					axi_arvalid,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb ARREADY" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb ARREADY" *)
     input wire					axi_arready,
     //AXI4 read data
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb RID" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb RID" *)
     input wire	[0 : 0]			axi_rid,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb RDATA" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb RDATA" *)
     input wire	[255 : 0]		axi_rdata,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb RRESP" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb RRESP" *)
     input wire	[1 : 0]			axi_rresp,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb RLAST" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb RLAST" *)
     input wire					axi_rlast,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb RVALID" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb RVALID" *)
     input wire					axi_rvalid,
-	// (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb RREADY" *)
+	(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 maxi_fb RREADY" *)
     output wire					axi_rready,
 	
 	//Misc
     input wire			zoom_mode, //0=scale, 1=crop
     input wire			freeze, //assert to disable writing
 	
+	(* X_INTERFACE_MODE = "Master" *)
 	(* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 lib_a CLK" *)
 	output wire					ilb_clka,
 	(* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 lib_a EN" *)
@@ -134,6 +136,9 @@ module framebuffer_ctrl_ext(
 	output wire		[11:0]		ilb_addra,
 	(* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 lib_a DIN" *)
 	output wire		[63:0]		ilb_dina,
+	
+	(* X_INTERFACE_MODE = "Master" *)
+	(* X_INTERFACE_PARAMETER = "READ_WRITE_MODE READ_ONLY" *)
 	(* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 lib_b CLK" *)
 	output wire					ilb_clkb,
 	(* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 lib_b ADDR" *)
@@ -141,6 +146,7 @@ module framebuffer_ctrl_ext(
 	(* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 lib_b DOUT" *)
 	input wire		[255:0]		ilb_doutb,
 	
+	(* X_INTERFACE_MODE = "Master" *)
 	(* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 olb_a CLK" *)
 	output wire					olb_clka,
 	(* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 olb_a EN" *)
@@ -151,6 +157,9 @@ module framebuffer_ctrl_ext(
 	output wire		[9:0]		olb_addra,
 	(* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 olb_a DIN" *)
 	output wire		[255:0]		olb_dina,
+	
+	(* X_INTERFACE_MODE = "Master" *)
+	(* X_INTERFACE_PARAMETER = "READ_WRITE_MODE READ_ONLY" *)
 	(* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 olb_b CLK" *)
 	output wire					olb_clkb,
 	(* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 olb_b ADDR" *)
@@ -164,10 +173,15 @@ module framebuffer_ctrl_ext(
 	reg		[7 : 0]		write_count;
 	
 	reg		input_linebuf_read_high, input_linebuf_write_high;
+	wire	cdc_input_linebuf_write_high;
+	
 	reg		output_linebuf_read_high, output_linebuf_write_high;
+	wire	cdc_output_linebuf_read_high;
 
 	reg		[11 : 0]	input_read_x, input_write_x, output_read_x, output_write_x;
 	reg		[11 : 0]	input_read_y, input_write_y, output_read_y, output_write_y;
+	
+	wire	[11 : 0]	cdc_in_write_y, cdc_out_read_y;
 	reg		[11 : 0]	input_write_y_curr, input_write_y_last, output_read_y_curr, output_read_y_last;
 
 	wire	[11:0]		input_linebuf_write_addr;
@@ -271,11 +285,63 @@ module framebuffer_ctrl_ext(
 	// ####################################################################################
 	
 	
+	xpm_cdc_array_single#(
+		.DEST_SYNC_FF(2),	// DECIMAL; range: 2-10
+		.INIT_SYNC_FF(0),	// DECIMAL; 0=disable simulation init values, 1=enable simulation init values
+		.SIM_ASSERT_CHK(0),	// DECIMAL; 0=disable simulation messages, 1=enable simulation messages
+		.SRC_INPUT_REG(0),	// DECIMAL; 0=do not register input, 1=register input
+		.WIDTH(12)
+	)cdc_write_y_inst(
+		.dest_out	(cdc_in_write_y),
+		.dest_clk	(axi_clock),
+		.src_clk	(input_clock),
+		.src_in		(input_write_y)
+	);
+	
+	xpm_cdc_array_single#(
+		.DEST_SYNC_FF(2),	// DECIMAL; range: 2-10
+		.INIT_SYNC_FF(0),	// DECIMAL; 0=disable simulation init values, 1=enable simulation init values
+		.SIM_ASSERT_CHK(0),	// DECIMAL; 0=disable simulation messages, 1=enable simulation messages
+		.SRC_INPUT_REG(0),	// DECIMAL; 0=do not register input, 1=register input
+		.WIDTH(1)
+	)cdc_write_lbh_inst(
+		.dest_out	(cdc_input_linebuf_write_high),
+		.dest_clk	(axi_clock),
+		.src_clk	(input_clock),
+		.src_in		(input_linebuf_write_high)
+	);
+	
+	xpm_cdc_array_single#(
+		.DEST_SYNC_FF(2),	// DECIMAL; range: 2-10
+		.INIT_SYNC_FF(0),	// DECIMAL; 0=disable simulation init values, 1=enable simulation init values
+		.SIM_ASSERT_CHK(0),	// DECIMAL; 0=disable simulation messages, 1=enable simulation messages
+		.SRC_INPUT_REG(0),	// DECIMAL; 0=do not register input, 1=register input
+		.WIDTH(12)
+	)cdc_read_y_inst(
+		.dest_out	(cdc_out_read_y),
+		.dest_clk	(axi_clock),
+		.src_clk	(output_clock),
+		.src_in		(output_read_y)
+	);
+	
+	xpm_cdc_array_single#(
+		.DEST_SYNC_FF(2),	// DECIMAL; range: 2-10
+		.INIT_SYNC_FF(0),	// DECIMAL; 0=disable simulation init values, 1=enable simulation init values
+		.SIM_ASSERT_CHK(0),	// DECIMAL; 0=disable simulation messages, 1=enable simulation messages
+		.SRC_INPUT_REG(0),	// DECIMAL; 0=do not register input, 1=register input
+		.WIDTH(1)
+	)cdc_read_lbh_inst(
+		.dest_out	(cdc_output_linebuf_read_high),
+		.dest_clk	(axi_clock),
+		.src_clk	(output_clock),
+		.src_in		(output_linebuf_read_high)
+	);
+	
 	// ####################################################################################
 	always@(posedge axi_clock)begin
-		input_write_y_curr <= input_write_y;
+		input_write_y_curr <= cdc_in_write_y;
 		input_write_y_last <= input_write_y_curr;
-		output_read_y_curr <= output_read_y;
+		output_read_y_curr <= cdc_out_read_y;
 		output_read_y_last <= output_read_y_curr;
 		
 		if(write_state == 0)begin
@@ -284,7 +350,7 @@ module framebuffer_ctrl_ext(
 				input_read_x <= 12'd0;
 			end
 			
-			input_linebuf_read_high <= ~input_linebuf_write_high;
+			input_linebuf_read_high <= ~cdc_input_linebuf_write_high;
 			input_read_y <= input_write_y_curr - 1;
 			input_linebuf_ready <= 1'b1;
 		end else if(write_state == 3)begin
@@ -310,7 +376,7 @@ module framebuffer_ctrl_ext(
 				output_write_y <= output_read_y_curr + 1;
 			end
 			
-			output_linebuf_write_high <= ~output_linebuf_read_high;
+			output_linebuf_write_high <= ~cdc_output_linebuf_read_high;
 		end else if(read_state == 2)begin
 			if(axi_rvalid)begin
 				output_write_x <= output_write_x + 8;
@@ -434,6 +500,25 @@ module framebuffer_ctrl_ext(
 	assign output_linebuf_din = axi_rdata;
 	// ####################################################################################
 	
+	assign ilb_clka		= input_clock;
+	assign ilb_ena		= 1'b1;
+	assign ilb_wea		= input_linebuf_wren;
+	assign ilb_addra	= input_linebuf_write_addr;
+	assign ilb_dina		= input_linebuf_din;
+	
+	assign ilb_clkb		= axi_clock;
+	assign ilb_addrb	= input_linebuf_read_addr;
+	assign input_linebuf_q = ilb_doutb;
+	
+	assign olb_clka		= axi_clock;
+	assign olb_ena		= 1'b1;
+	assign olb_wea		= output_linebuf_wren;
+	assign olb_addra	= output_linebuf_write_addr;
+	assign olb_dina		= output_linebuf_din;
+	
+	assign olb_clkb		= output_clock;
+	assign olb_addrb	= output_linebuf_read_addr;
+	assign output_linebuf_q = olb_doutb;
 	
 	// input_line_buffer inbuf(
 		// .clka	(input_clock),
