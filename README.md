@@ -1,6 +1,6 @@
 # kintex7-ov13850-fpga-mipi-camera
 
-This is a renew revision of OV13850 MIPI CSI-2 Camera Demonstration
+This is a renew revision of OV13850 MIPI CSI-2 Camera Demonstration from https://github.com/gatecat/CSI2Rx.git.
 
 # Hardware Setup - OV13850 (EVB CAM1320)
 
