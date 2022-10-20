@@ -2,6 +2,12 @@
 
 This is a renew revision of OV13850 MIPI CSI-2 Camera Demonstration
 
+# Hardware Setup - OV13850 (EVB CAM1320)
+
+https://wiki.friendlyelec.com/wiki/index.php/Matrix_-_CAM1320
+
+<img src="https://user-images.githubusercontent.com/29487339/196957749-01f269f3-7e2b-46f7-bed5-f2cc1b13ef1b.JPG" style="height:45%; width:45%"> <img src="https://user-images.githubusercontent.com/29487339/196957945-e12b5e69-e9f5-4f64-9734-6a4ca24b32de.JPG" style="height:45%; width:45%">
+
 # Vivado Blocks
 
 <img src="https://user-images.githubusercontent.com/29487339/196951043-0649ad0d-74d4-42f2-b8c0-5e2d63f34c53.png" style="height:65%; width:65%">
