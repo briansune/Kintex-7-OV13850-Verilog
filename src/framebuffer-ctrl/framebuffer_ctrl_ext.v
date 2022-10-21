@@ -245,11 +245,13 @@ module framebuffer_ctrl_ext#(
 	assign output_linebuf_write_addr = {output_linebuf_write_high, output_write_x[11:3]};
 	assign output_linebuf_read_addr = {output_linebuf_read_high, output_read_x[11:1]};
 	
-	assign fb_write_address = (input_read_y * input_width) + input_read_x;
+	// 29 bit DDR address
+	// assume read X and Y same size 
+	assign fb_write_address = {input_read_y, input_read_x};
 	
 	assign fb_read_address = zoom_mode ? 
-		(((output_write_y + crop_yoffset) * input_width) + output_write_x + crop_xoffset) : 
-		((output_write_y * input_width * 2) + output_write_x);
+		{(output_write_y + crop_yoffset), (output_write_x + crop_xoffset)} : 
+		{output_write_y[10:0], 1'b0, output_write_x};
 	
 	assign output_write_end_x = zoom_mode ? output_width : (output_width * 2);
 	
@@ -278,13 +280,13 @@ module framebuffer_ctrl_ext#(
 	always@(posedge output_clock)begin
 		if(output_vsync)begin
 			output_read_x <= 12'd0;
-			output_read_y <= 12'd0;
+			output_read_y <= 12'd1;
 			output_linebuf_read_high <= 1'b1;
 		end else if(output_line_start)begin
 			output_read_x <= 12'd0;
 			output_linebuf_read_high <= ~output_linebuf_read_high;
-			if(output_read_y == 12'd4095)begin
-				output_read_y <= 12'd0;
+			if(output_read_y == 12'd0)begin
+				output_read_y <= 12'd1;
 			end else begin
 				output_read_y <= output_read_y + 1;
 			end
