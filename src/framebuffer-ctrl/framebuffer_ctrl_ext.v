@@ -249,8 +249,12 @@ module framebuffer_ctrl_ext#(
 	// assume read X and Y same size 
 	assign fb_write_address = {input_read_y, input_read_x};
 	
+	wire [11:0] tmp_x, tmp_y;
+	assign tmp_y = output_write_y + crop_yoffset;
+	assign tmp_x = output_write_x + crop_xoffset;
+	
 	assign fb_read_address = zoom_mode ? 
-		{(output_write_y + crop_yoffset), (output_write_x + crop_xoffset)} : 
+		{tmp_y, tmp_x} : 
 		{output_write_y[10:0], 1'b0, output_write_x};
 	
 	assign output_write_end_x = zoom_mode ? output_width : (output_width * 2);
