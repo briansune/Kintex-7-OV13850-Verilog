@@ -6,7 +6,7 @@ A well supplier provide OV13850 with VCM and w/o VCM:
 
 See: https://item.taobao.com/item.htm?spm=a1z09.2.0.0.4d962e8dgmcFQt&id=675713230462&_u=u10quk0k1301
 
-<img src="https://user-images.githubusercontent.com/29487339/204708712-8f84cc98-a2f0-4f0e-8818-9653b8241059.png" style="height:25%; width:25%">
+<img src="https://user-images.githubusercontent.com/29487339/204708999-366bc21d-de9e-48be-a4b9-bf08d01bfc4e.png" style="height:35%; width:35%">
 
 
 # Hardware Setup - OV13850 (EVB CAM1320)
