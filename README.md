@@ -1,12 +1,10 @@
 # kintex7-ov13850-fpga-mipi-camera
 
-This is a renew revision of OV13850 MIPI CSI-2 Camera Demonstration from https://github.com/gatecat/CSI2Rx.git.
+This is a renew revision of OV13850 MIPI CSI-2 Camera Demonstration from <a href="https://github.com/gatecat/CSI2Rx.git" target="_blank">Original Post</a>.
 
-A well supplier provide OV13850 with VCM and w/o VCM:
+A well supplier provide OV13850 with VCM and w/o VCM: <a href="https://item.taobao.com/item.htm?spm=a1z09.2.0.0.4d962e8dgmcFQt&id=675713230462&_u=u10quk0k1301" target="_blank">Camera Supplier</a>
 
-<a href="https://item.taobao.com/item.htm?spm=a1z09.2.0.0.4d962e8dgmcFQt&id=675713230462&_u=u10quk0k1301" target="_blank">Camera Supplier</a>
-
-<img src="https://user-images.githubusercontent.com/29487339/204708999-366bc21d-de9e-48be-a4b9-bf08d01bfc4e.png" style="height:35%; width:35%">
+<img src="https://user-images.githubusercontent.com/29487339/204708999-366bc21d-de9e-48be-a4b9-bf08d01bfc4e.png" style="height:35%; width:35%"><img src="https://user-images.githubusercontent.com/29487339/204715222-4e6f186b-3a4f-46ce-9c88-a4905fbe259f.png" style="height:35%; width:35%">
 
 
 # Hardware Setup - OV13850 (EVB CAM1320)
