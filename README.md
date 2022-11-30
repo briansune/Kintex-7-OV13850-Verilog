@@ -2,6 +2,10 @@
 
 This is a renew revision of OV13850 MIPI CSI-2 Camera Demonstration from https://github.com/gatecat/CSI2Rx.git.
 
+A well supplier provide OV13850 with VCM and w/o VCM:
+
+See: https://item.taobao.com/item.htm?spm=a1z09.2.0.0.4d962e8dgmcFQt&id=675713230462&_u=u10quk0k1301
+
 # Hardware Setup - OV13850 (EVB CAM1320)
 
 https://wiki.friendlyelec.com/wiki/index.php/Matrix_-_CAM1320
