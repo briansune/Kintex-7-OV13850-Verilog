@@ -10,6 +10,9 @@ A well supplier provide OV13850 with VCM and w/o VCM: <a href="https://item.taob
 
 <img src="https://user-images.githubusercontent.com/29487339/204751996-902270a7-61d3-4f8a-b939-0c7ecb49a5ae.JPG" style="height:35%; width:35%">
 
+## If this project is constructive, welcome to donate a drink to PayPal.
+
+<img src="https://github.com/briansune/FPGA-Camera-MIPI-DVP-Verilog/assets/29487339/75ccc568-4f17-48a1-b2af-20211f98896c" style="height:20%; width:20%">
 
 # Hardware Setup - OV13850 (EVB CAM1320)
 
