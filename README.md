@@ -6,7 +6,13 @@ This is a renew revision of OV13850 MIPI CSI-2 Camera Demonstration from <a href
 
 <img src="https://github.com/briansune/FPGA-Camera-MIPI-DVP-Verilog/assets/29487339/75ccc568-4f17-48a1-b2af-20211f98896c" style="height:20%; width:20%">
 
-A well supplier provide OV13850 with VCM and w/o VCM: <a href="https://item.taobao.com/item.htm?spm=a1z09.2.0.0.4d962e8dgmcFQt&id=675713230462&_u=u10quk0k1301" target="_blank">Camera Supplier</a>
+** REMARKS: Due to long term test result on cross-platform shows this CMOS provider have PCB design issues.
+
+1) Trace impedance are not control nor considered.
+2) No trace skew considered.
+3) Poor product support.
+
+DON'T USE this supplier provided OV13850 with VCM and w/o VCM: <a href="https://item.taobao.com/item.htm?spm=a1z09.2.0.0.4d962e8dgmcFQt&id=675713230462&_u=u10quk0k1301" target="_blank">Camera Supplier</a>
 
 <img src="https://user-images.githubusercontent.com/29487339/204708999-366bc21d-de9e-48be-a4b9-bf08d01bfc4e.png" style="height:35%; width:35%"><img src="https://user-images.githubusercontent.com/29487339/204715222-4e6f186b-3a4f-46ce-9c88-a4905fbe259f.png" style="height:35%; width:35%">
 
